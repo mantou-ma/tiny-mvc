@@ -1,4 +1,4 @@
-/* 
+/**
 ======================
 @author : mantou
 @date : 2018/1/9
@@ -6,12 +6,13 @@
 Description:
 
 ======================
-Major changs:
+Major changes:
 
 */
 
 
-package utils.classutil.classutilpkg;
+package tinymvc.core.utils.classutil.classutilpkg;
 
 public class Demo2 {
+
 }

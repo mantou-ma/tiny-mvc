@@ -6,12 +6,12 @@
 Description:
 
 ======================
-Major changs:
+Major changes:
 
 */
 
 
-package utils;
+package tinymvc.core.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -6,12 +6,12 @@
 Description:
 
 ======================
-Major changs:
+Major changes:
 
 */
 
 
-package annotation;
+package tinymvc.core.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -10,14 +10,13 @@ Major changes:
 
 ***/
 
-package utils.classutil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package tinymvc.core.utils.classutil;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -25,27 +24,47 @@ import java.util.Set;
 
 public final class ClassUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
 
-    public static ClassLoader getClassLoader() {
-        return Thread.currentThread().getContextClassLoader();
+    public static Set<Class<?>> getClassSetByAnnotation(Set<Class<?>> classSet, Class annotation) {
+        Set<Class<?>> res = new HashSet<>();
+        for (Class<?> c : classSet) {
+            Annotation a = c.getAnnotation(annotation);
+            if (null != a) {
+                res.add(c);
+            }
+        }
+        return res;
+    }
+
+    public static Set<Method> getMethodSetByAnnotation(Class<?> clazz, Class annotation) {
+        Set<Method> method = new HashSet<>();
+        return null;
     }
 
     public static Class<?> loadClass(String className, boolean isInitialized) {
+        return loadClass(getClassLoader(), className, isInitialized);
+    }
+
+    public static Class<?> loadClass(ClassLoader classLoader, String className, boolean isInitialized) {
         Class<?> clazz;
         try {
-            clazz = getClassLoader().loadClass(className);
+            clazz = classLoader.loadClass(className);
         } catch (ClassNotFoundException e) {
-            LOGGER.error("class {} not found", className, e);
+//            LOGGER.error("class {} not found", className, e);
             throw new RuntimeException(e);
         }
         return clazz;
     }
 
     public static Set<Class<?>> getClassSet(String packageName) {
+        return getClassSet(getClassLoader(), packageName);
+    }
+
+    public static Set<Class<?>> getClassSet(ClassLoader classLoader, String packageName) {
         Set<Class<?>> classSet = new HashSet<>();
         try {
-            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
+            Enumeration<URL> urls = classLoader.getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
                 if (null != url) {
@@ -54,7 +73,6 @@ public final class ClassUtil {
                         String path = url.getPath();
                         doAddClass(classSet, packageName, path);
                     } else if ("jar".equals(protocol)) {
-                        System.out.println(protocol);
                     }
                 }
             }
@@ -65,6 +83,10 @@ public final class ClassUtil {
 
         }
         return classSet;
+    }
+
+    private static ClassLoader getClassLoader() {
+        return Thread.currentThread().getContextClassLoader();
     }
 
     private static void doAddClass(Set<Class<?>> classSet, String packageName, String path) throws ClassNotFoundException {

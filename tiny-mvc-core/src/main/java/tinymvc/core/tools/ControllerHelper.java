@@ -11,10 +11,11 @@
  */
 
 
-package tinymvc.request;
+package tinymvc.core.tools;
 
 import tinymvc.core.annotation.Action;
-import tinymvc.core.tools.ClassHelper;
+import tinymvc.request.Handler;
+import tinymvc.request.Request;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class ControllerHelper {
     private static final Map<Request, Handler> requestMap = new HashMap<>();
 
     static {
+        System.out.println("init controller helper");
         Set<Class<?>> classSet = ClassHelper.getController(getPackagePath());
         for (Class<?> clazz : classSet) {
             Method[] methods = clazz.getMethods();
@@ -35,6 +37,7 @@ public class ControllerHelper {
                     Request request = buildRequest(action.method(), action.path());
                     Handler handler = buildHandler(clazz, method);
                     requestMap.put(request, handler);
+                    System.out.println("load action: " + request.toString());
                 }
             }
         }
@@ -49,10 +52,15 @@ public class ControllerHelper {
     }
 
     private static String getPackagePath() {
-        return "tinymvc.core.utils.classutil.classutilpkg";
+        return ConfigHelper.getControllerPackagePath();
     }
 
     public static Map<Request, Handler> getRequestMap() {
         return requestMap;
+    }
+
+    public static Handler getHandler(String method, String path) {
+        Request request = buildRequest(method, path);
+        return requestMap.get(request);
     }
 }

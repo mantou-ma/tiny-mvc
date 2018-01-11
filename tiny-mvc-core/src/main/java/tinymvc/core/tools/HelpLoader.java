@@ -8,8 +8,6 @@
  * <p/>
  * ======================
  * Major changes:
- * <p/>
- * *
  */
 
 
@@ -18,12 +16,14 @@ package tinymvc.core.tools;
 import tinymvc.core.annotation.Controller;
 import tinymvc.core.utils.classutil.ClassUtil;
 
-import java.util.Set;
+public class HelpLoader {
 
-public class ClassHelper {
+    public static void init() {
 
-    public static Set<Class<?>> getController(String packageName) {
-        Set<Class<?>> classSet = ClassUtil.getClassSet(packageName);
-        return ClassUtil.getClassSetByAnnotation(classSet, Controller.class);
+        Class<?> [] classes = {Controller.class,};
+        for (Class<?> clazz : classes) {
+            ClassUtil.loadClass(clazz.getName(), true);
+        }
+
     }
 }

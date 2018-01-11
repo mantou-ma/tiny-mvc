@@ -13,19 +13,22 @@ Major changes:
 
 package tinymvc.core.utils;
 
-import tinymvc.core.annotation.Controller;
 import tinymvc.core.utils.classutil.ClassUtil;
-import tinymvc.request.ControllerHelper;
+import tinymvc.core.tools.ControllerHelper;
 
 import java.util.Set;
 
 public class Test {
 
+    static {
+        ClassUtil.loadClass(ControllerHelper.class.getName(), true);
+    }
+
     public static void main(String[] args) {
         Set<Class<?>> classSet = null;
-        classSet = ClassUtil.getClassSet(Thread.currentThread().getContextClassLoader(), "tinymvc.core.utils.classutil");
-        classSet = ClassUtil.getClassSetByAnnotation(classSet, Controller.class);
+//        classSet = ClassUtil.getClassSet(Thread.currentThread().getContextClassLoader(), "tinymvc.core.utils.classutil");
+//        classSet = ClassUtil.getClassSetByAnnotation(classSet, Controller.class);
 
-        System.out.println(ControllerHelper.getRequestMap());
+//        System.out.println(ControllerHelper.getRequestMap());
     }
 }

@@ -49,7 +49,7 @@ public final class ClassUtil {
     public static Class<?> loadClass(ClassLoader classLoader, String className, boolean isInitialized) {
         Class<?> clazz;
         try {
-            clazz = classLoader.loadClass(className);
+            clazz = Class.forName(className, isInitialized, classLoader);
         } catch (ClassNotFoundException e) {
 //            LOGGER.error("class {} not found", className, e);
             throw new RuntimeException(e);

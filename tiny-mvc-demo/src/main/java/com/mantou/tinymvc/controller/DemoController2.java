@@ -14,8 +14,10 @@
 package com.mantou.tinymvc.controller;
 
 
+import com.mantou.tinymvc.dto.DemoData;
 import tinymvc.core.annotation.Action;
 import tinymvc.core.annotation.Controller;
+import tinymvc.request.Param;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,12 +26,15 @@ import javax.servlet.http.HttpServletResponse;
 public class DemoController2 {
 
     @Action(method = "GET", path = "/")
-    public Object getMethod(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        return "";
+    public Object getMethod(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Param param) {
+        DemoData demoData = new DemoData();
+        demoData.setAge(10);
+        demoData.setName("kuma");
+        return demoData;
     }
 
     @Action(method = "POST", path = "/demo/post2")
-    public Object demoMethonPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public Object demoMethonPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Param param) {
         return null;
     }
 }

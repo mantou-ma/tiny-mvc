@@ -13,11 +13,13 @@
 
 package tinymvc.servlet;
 
+import com.alibaba.fastjson.JSON;
 import tinymvc.core.tools.ControllerHelper;
 import tinymvc.core.tools.HelpLoader;
-import tinymvc.core.tools.IOCHelper;
+import tinymvc.core.tools.IocHelper;
 import tinymvc.core.utils.ReflectionUtil;
 import tinymvc.request.Handler;
+import tinymvc.request.Param;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -48,7 +51,7 @@ public class DispatcherServlet extends HttpServlet {
         if (null != handler) {
             Class<?> clazz = handler.getControllerClass();
             Method method = handler.getMethod();
-            Object controller = IOCHelper.getBean(clazz.getName());
+            Object controller = IocHelper.getBean(clazz);
             Map<String, Object> paramMap = new HashMap<>();
 
             Enumeration<String> paramNames = req.getParameterNames();
@@ -57,8 +60,18 @@ public class DispatcherServlet extends HttpServlet {
                 String value = req.getParameter(param);
                 paramMap.put(param, value);
             }
-
-            Object res = ReflectionUtil.invokeMethod(controller, method, paramMap);
+            Param param = new Param();
+            param.setParam(paramMap);
+            Object res = ReflectionUtil.invokeMethod(controller, method, param, req, resp);
+            if (null != res) {
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter printWriter = resp.getWriter();
+                String json = JSON.toJSONString(res);
+                printWriter.write(json);
+                printWriter.flush();
+                printWriter.close();
+            }
         } else {
             return;
         }

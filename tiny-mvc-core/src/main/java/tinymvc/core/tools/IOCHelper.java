@@ -13,9 +13,29 @@
 
 package tinymvc.core.tools;
 
-public class IOCHelper {
+import tinymvc.core.utils.ReflectionUtil;
 
-    public static Object getBean(String beanName) {
-        return null;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class IocHelper {
+
+    private static Map<Class<?>, Object> CONTROLLER_BEAN_MAP = new HashMap<>();
+
+    static {
+        addController();
+    }
+
+    private static void addController() {
+        Set<Class<?>> controllerClass = ControllerHelper.getControllerClassSet();
+        for (Class<?> clazz : controllerClass) {
+            Object controller = ReflectionUtil.newInstance(clazz);
+            CONTROLLER_BEAN_MAP.put(clazz, controller);
+        }
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
+        return (T)CONTROLLER_BEAN_MAP.get(clazz);
     }
 }

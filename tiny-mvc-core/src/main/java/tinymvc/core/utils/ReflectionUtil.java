@@ -15,7 +15,10 @@ package tinymvc.core.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tinymvc.request.Param;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -35,9 +38,9 @@ public class ReflectionUtil {
         return instance;
     }
 
-    public static Object invokeMethod(Object object, Method method, Map<String, Object> param) {
+    public static Object invokeMethod(Object object, Method method, Param param, HttpServletRequest req, HttpServletResponse resp) {
         try {
-            return method.invoke(object, param);
+            return method.invoke(object, req, resp, param);
         } catch (IllegalAccessException e) {
 
         } catch (InvocationTargetException e) {

@@ -26,10 +26,12 @@ public class ControllerHelper {
 
     private static final Map<Request, Handler> requestMap = new HashMap<>();
 
+    private static Set<Class<?>> controllerClassSet;
+
     static {
         System.out.println("init controller helper");
-        Set<Class<?>> classSet = ClassHelper.getController(getPackagePath());
-        for (Class<?> clazz : classSet) {
+        controllerClassSet = ClassHelper.getController(getPackagePath());
+        for (Class<?> clazz : controllerClassSet) {
             Method[] methods = clazz.getMethods();
             for (Method method : methods) {
                 if (method.isAnnotationPresent(Action.class)) {
@@ -41,6 +43,10 @@ public class ControllerHelper {
                 }
             }
         }
+    }
+
+    public static Set<Class<?>> getControllerClassSet() {
+        return controllerClassSet;
     }
 
     private static Request buildRequest(String method, String path) {

@@ -1,4 +1,4 @@
-/***
+/**
 ======================
 @author : mantou
 @date : 2017/11/29
@@ -8,7 +8,7 @@ Description:
 ======================
 Major changes:
 
-***/
+*/
 
 
 package tinymvc.core.utils;

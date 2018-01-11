@@ -57,6 +57,12 @@
             <version>2.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>wentao.ma</groupId>
+            <artifactId>tiny-mvc-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

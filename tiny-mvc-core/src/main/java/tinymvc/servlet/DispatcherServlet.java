@@ -16,7 +16,7 @@ package tinymvc.servlet;
 import com.alibaba.fastjson.JSON;
 import tinymvc.core.tools.ControllerHelper;
 import tinymvc.core.tools.HelpLoader;
-import tinymvc.core.tools.IocHelper;
+import tinymvc.core.tools.IocBeanHelper;
 import tinymvc.core.utils.ReflectionUtil;
 import tinymvc.request.Handler;
 import tinymvc.request.Param;
@@ -51,7 +51,7 @@ public class DispatcherServlet extends HttpServlet {
         if (null != handler) {
             Class<?> clazz = handler.getControllerClass();
             Method method = handler.getMethod();
-            Object controller = IocHelper.getBean(clazz);
+            Object controller = IocBeanHelper.getBean(clazz);
             Map<String, Object> paramMap = new HashMap<>();
 
             Enumeration<String> paramNames = req.getParameterNames();

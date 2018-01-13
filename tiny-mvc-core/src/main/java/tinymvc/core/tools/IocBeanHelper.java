@@ -13,13 +13,17 @@
 
 package tinymvc.core.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tinymvc.core.utils.ReflectionUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class IocHelper {
+public class IocBeanHelper {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IocBeanHelper.class);
 
     private static Map<Class<?>, Object> CONTROLLER_BEAN_MAP = new HashMap<>();
 
@@ -32,6 +36,7 @@ public class IocHelper {
         for (Class<?> clazz : controllerClass) {
             Object controller = ReflectionUtil.newInstance(clazz);
             CONTROLLER_BEAN_MAP.put(clazz, controller);
+            LOGGER.info("instance controller {}", clazz.getName());
         }
     }
 

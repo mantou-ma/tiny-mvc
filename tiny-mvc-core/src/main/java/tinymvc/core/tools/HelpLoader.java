@@ -14,7 +14,7 @@
 package tinymvc.core.tools;
 
 import tinymvc.core.annotation.Controller;
-import tinymvc.core.utils.classutil.ClassUtil;
+import tinymvc.core.utils.ClassUtil;
 
 public class HelpLoader {
 

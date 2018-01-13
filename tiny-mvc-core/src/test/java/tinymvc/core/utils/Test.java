@@ -13,7 +13,6 @@ Major changes:
 
 package tinymvc.core.utils;
 
-import tinymvc.core.utils.classutil.ClassUtil;
 import tinymvc.core.tools.ControllerHelper;
 
 import java.util.Set;

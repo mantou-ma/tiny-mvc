@@ -13,6 +13,8 @@
 
 package tinymvc.core.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tinymvc.core.annotation.Action;
 import tinymvc.request.Handler;
 import tinymvc.request.Request;
@@ -24,12 +26,14 @@ import java.util.Set;
 
 public class ControllerHelper {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerHelper.class);
+
     private static final Map<Request, Handler> requestMap = new HashMap<>();
 
     private static Set<Class<?>> controllerClassSet;
 
     static {
-        System.out.println("init controller helper");
+        LOGGER.info("begin init controllerHelper");
         controllerClassSet = ClassHelper.getController(getPackagePath());
         for (Class<?> clazz : controllerClassSet) {
             Method[] methods = clazz.getMethods();
@@ -39,7 +43,7 @@ public class ControllerHelper {
                     Request request = buildRequest(action.method(), action.path());
                     Handler handler = buildHandler(clazz, method);
                     requestMap.put(request, handler);
-                    System.out.println("load action: " + request.toString());
+                    LOGGER.info("load Action {}", request.toString());
                 }
             }
         }

@@ -1,4 +1,4 @@
-/***
+/**
 ======================
 @author : mantou
 @date : 2017/11/29
@@ -8,9 +8,12 @@ Description:
 ======================
 Major changes:
 
-***/
+*/
 
-package tinymvc.core.utils.classutil;
+package tinymvc.core.utils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,13 +21,15 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
 public final class ClassUtil {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
 
     public static Set<Class<?>> getClassSetByAnnotation(Set<Class<?>> classSet, Class annotation) {
         Set<Class<?>> res = new HashSet<>();
@@ -50,8 +55,8 @@ public final class ClassUtil {
         Class<?> clazz;
         try {
             clazz = Class.forName(className, isInitialized, classLoader);
-        } catch (ClassNotFoundException e) {
-//            LOGGER.error("class {} not found", className, e);
+        } catch (Exception e) {
+            LOGGER.error("class {} not found", className, e);
             throw new RuntimeException(e);
         }
         return clazz;
@@ -71,7 +76,7 @@ public final class ClassUtil {
                     String protocol = url.getProtocol();
                     if ("file".equals(protocol)) {
                         String path = url.getPath();
-                        doAddClass(classSet, packageName, path);
+                        doAddClass(classSet, packageName, URLDecoder.decode(path, "UTF-8"));
                     } else if ("jar".equals(protocol)) {
                     }
                 }

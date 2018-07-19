@@ -14,9 +14,9 @@
 package com.mantou.tinymvc.controller;
 
 import com.mantou.tinymvc.dto.DemoData;
-import tinymvc.core.annotation.Action;
-import tinymvc.core.annotation.Controller;
-import tinymvc.request.Param;
+import com.mantou.tinymvc.core.annotation.Action;
+import com.mantou.tinymvc.core.annotation.Controller;
+import com.mantou.tinymvc.request.Param;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

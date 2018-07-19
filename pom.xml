@@ -11,6 +11,7 @@
     <modules>
         <module>tiny-mvc-demo</module>
         <module>tiny-mvc-core</module>
+        <module>tiny-mvc-aop</module>
     </modules>
 
     <properties>
